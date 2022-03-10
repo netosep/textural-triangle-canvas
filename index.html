@@ -14,7 +14,7 @@
     }
     canvas { 
         border: 1px solid #000; 
-        background: url('triangulo.pngi');
+        background: url('triangulo.pngo');
         background-position: center;
         background-size: cover;
     }
@@ -23,14 +23,28 @@
 <body>
     <div class="canvas-box">
         <canvas id="canvas" width="1000px" height="1000px"></canvas>
-        <span id="text">a</span>
+        <span id="text"></span>
     </div>
 </body>
-<script type="text/javascript">
+<script src="./texturalTriangle.js"></script>
+<script>
+    var t = new TexturalTriangle(40, 30, 30);
+    t.draw('canvas');
+</script>
+
+
+<!-- <script type="text/javascript">
 
     const siltPercent = 0.3;
     const sandPercent = 0.4 * 10;
     const clayPercent = 0.3;
+
+    const textColor = 'black';
+    const backgroundColor = 'white';
+    const triangleColor = 'black';
+    const siltColor = 'red';
+    const sandColor = 'orange';
+    const clayColor = 'blue';
     
     var canvas = document.getElementById('canvas');
     var txtSpan = document.getElementById('text');
@@ -43,15 +57,15 @@
 
     txtSpan.innerHTML = canvasWidth + 'x' + canvasWidth + 'px';
 
-    // triangulo vermelho
+    // background branco
+    ctx.fillStyle  = '#FFF';
     ctx.beginPath();
-    ctx.moveTo((canvasWidth * pad), canvasHeight - (canvasHeight * pad));
-    ctx.lineWidth = 5;
-    ctx.lineTo((canvasWidth/2), (canvasHeight * pad));
-    ctx.lineTo(canvasWidth - (canvasWidth * pad), canvasHeight - (canvasHeight * pad));
+    ctx.moveTo(0, 0);
+    ctx.lineTo(canvasWidth, 0);
+    ctx.lineTo(canvasWidth, canvasHeight);
+    ctx.lineTo(0, canvasHeight);
     ctx.closePath();
-    ctx.strokeStyle = '#ff0000';
-    ctx.stroke();
+    ctx.fill();
 
     // linhas verticaris grade
     /* for (let x = (canvasWidth * pad); x <= (canvasWidth - (canvasWidth * pad)); x+=gap) {
@@ -64,6 +78,7 @@
         ctx.lineTo(x, (canvasHeight * pad));
         ctx.stroke(); 
     } */
+
     // linhas horizontais grade
     for (let y = (canvasHeight * pad); y <= (canvasHeight - (canvasHeight * pad)); y+=gap) {
         ctx.lineWidth = 1;
@@ -76,13 +91,13 @@
         ctx.stroke(); 
     }
 
-    /* ctx.lineWidth = 1;
+   /*  ctx.lineWidth = 1;
     ctx.strokeStyle = '#000000';
     ctx.setLineDash([0, 0]);
     ctx.beginPath();
     ctx.moveTo(canvasWidth - (canvasWidth * pad + ((gap * sandPercent))), canvasHeight - (canvasHeight * pad));
     ctx.lineTo((canvasWidth / 2) - ((gap * sandPercent)), (canvasHeight * pad));
-    ctx.stroke();  */
+    ctx.stroke(); */ 
 
     // sand line
     var sandLineGap = 0
@@ -112,9 +127,95 @@
         siltLineGap += gap;
     }
 
+    // linha tipos de solo
+    ctx.lineWidth = (canvasWidth * 0.004);
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo((canvasWidth * 0.34), (canvasHeight * 0.42));
+    ctx.lineTo(canvasWidth - (canvasWidth * 0.34), (canvasHeight * 0.42));
+    ctx.lineTo((canvasWidth * 0.58), (canvasHeight * 0.58));
+    ctx.lineTo((canvasWidth * 0.74), (canvasHeight * 0.58));
+    ctx.lineTo((canvasWidth * 0.79), (canvasHeight * 0.68));
+    ctx.lineTo((canvasWidth * 0.63), (canvasHeight * 0.68));
+    ctx.lineTo((canvasWidth * 0.58), (canvasHeight * 0.58));
+    ctx.lineTo((canvasWidth * 0.38), (canvasHeight * 0.58));
+    ctx.lineTo((canvasWidth * 0.32), (canvasHeight * 0.46));
+    ctx.lineTo((canvasWidth * 0.24), (canvasHeight * 0.62));
+    ctx.lineTo((canvasWidth * 0.40), (canvasHeight * 0.62));
+    ctx.lineTo((canvasWidth * 0.38), (canvasHeight * 0.58));
+    ctx.lineTo((canvasWidth * 0.43), (canvasHeight * 0.68));
+    ctx.lineTo((canvasWidth * 0.79), (canvasHeight * 0.68));
+    ctx.lineTo((canvasWidth * 0.61), (canvasHeight * 0.68));
+    ctx.lineTo((canvasWidth * 0.50), (canvasHeight * 0.90));
+    ctx.lineTo((canvasWidth * 0.34), (canvasHeight * 0.90));
+    ctx.lineTo((canvasWidth * 0.16), (canvasHeight * 0.78));
+    ctx.lineTo((canvasWidth * 0.14), (canvasHeight * 0.82));
+    ctx.lineTo((canvasWidth * 0.23), (canvasHeight * 0.90));
+    ctx.lineTo((canvasWidth * 0.50), (canvasHeight * 0.90));
+    ctx.lineTo((canvasWidth * 0.52), (canvasHeight * 0.86));
+    ctx.lineTo((canvasWidth * 0.46), (canvasHeight * 0.86));
+    ctx.lineTo((canvasWidth * 0.40), (canvasHeight * 0.74));
+    ctx.lineTo((canvasWidth * 0.43), (canvasHeight * 0.68));
+    ctx.lineTo((canvasWidth * 0.40), (canvasHeight * 0.74));
+    ctx.lineTo((canvasWidth * 0.18), (canvasHeight * 0.74));
+    ctx.moveTo((canvasWidth * 0.74), (canvasHeight * 0.90));
+    ctx.lineTo((canvasWidth * 0.78), (canvasHeight * 0.82));
+    ctx.lineTo((canvasWidth * 0.86), (canvasHeight * 0.82));
+    ctx.stroke();
+
+    // texto Muito Argilosa
+    ctx.font = `bold ${(canvasWidth * 0.023)}px Arial`;
+    ctx.fillStyle  = textColor;
+    ctx.textAlign = "center";
+    ctx.fillText('MUITO', (canvasWidth / 2), (canvasHeight * 0.31));
+    ctx.fillText('ARGILOSA', (canvasWidth / 2), (canvasHeight * 0.33));
+
+    // texto Argila
+    ctx.font = `bold ${(canvasWidth * 0.023)}px Arial`;
+    ctx.fillStyle  = textColor;
+    ctx.textAlign = "center";
+    ctx.fillText('ARGILA', (canvasWidth / 2), (canvasHeight * 0.51));
+
+    // texto Argilo Siltosa
+    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
+    ctx.fillStyle  = textColor;
+    ctx.textAlign = "center";
+    ctx.fillText('ARGILO', (canvasWidth * 0.66), (canvasHeight * 0.53));
+    ctx.fillText('SILTOSA', (canvasWidth * 0.66), (canvasHeight * 0.55));
+
+    // texto Argilo Arenosa
+    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
+    ctx.fillStyle  = textColor;
+    ctx.textAlign = "center";
+    ctx.fillText('ARGILO', (canvasWidth * 0.32), (canvasHeight * 0.57));
+    ctx.fillText('ARENOSA', (canvasWidth * 0.32), (canvasHeight * 0.59));
+
+    // texto Franco Argilosa
+    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
+    ctx.fillStyle  = textColor;
+    ctx.textAlign = "center";
+    ctx.fillText('FRANCO', (canvasWidth * 0.50), (canvasHeight * 0.63));
+    ctx.fillText('ARGILOSA', (canvasWidth * 0.50), (canvasHeight * 0.65));
+
+    // texto Franco Argilo Siltosa
+    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
+    ctx.fillStyle  = textColor;
+    ctx.textAlign = "center";
+    ctx.fillText('FRANCO', (canvasWidth * 0.68), (canvasHeight * 0.62));
+    ctx.fillText('ARGILO', (canvasWidth * 0.68), (canvasHeight * 0.64));
+    ctx.fillText('SILTOSA', (canvasWidth * 0.68), (canvasHeight * 0.66));
+
+    // texto Franco Argiloso Arenosa
+    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
+    ctx.fillStyle  = textColor;
+    ctx.textAlign = "center";
+    ctx.fillText('FRANCO', (canvasWidth * 0.31), (canvasHeight * 0.67));
+    ctx.fillText('ARGILOSO', (canvasWidth * 0.31), (canvasHeight * 0.69));
+    ctx.fillText('ARENOSA', (canvasWidth * 0.31), (canvasHeight * 0.71));
+
     // fundo branco mascara
     ctx.lineWidth = 7;
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = textColor;
     ctx.fillStyle  = '#FFF';
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -133,32 +234,53 @@
     
     var marginFontClay = 0;
     for (let percentClay = 0; percentClay <= 100; percentClay+=10) {
-        ctx.font = "bold 18px Arial";
+        ctx.font = `bold ${(canvasWidth * 0.025)}px Arial`;
         ctx.fillStyle  = 'blue';
         ctx.textAlign = "right";
         ctx.fillText(percentClay, ((canvasWidth * pad) - 10) + (marginFontClay / 2), (canvasHeight - (canvasHeight * pad)) - marginFontClay);
         marginFontClay += gap;
     }
+    ctx.font = `bold ${canvasWidth / 25}px Arial`;
+    ctx.fillStyle  = 'blue';
+    ctx.textAlign = 'center';
+    ctx.save();
+    ctx.translate(0, canvasHeight);
+    ctx.rotate(-Math.PI / 2.9);
+    ctx.fillText('% ARGILA', canvasWidth, (canvasHeight / 2));
+    ctx.restore();
 
     var marginFontSand = 0;
     for (let percentSand = 0; percentSand <= 100; percentSand+=10) {
-        ctx.font = "bold 18px Arial";
+        ctx.font = `bold ${(canvasWidth * 0.025)}px Arial`;
         ctx.fillStyle  = 'orange';
-        ctx.textAlign = "right";
-        ctx.fillText(percentSand, (canvasWidth - ((canvasWidth * pad) + marginFontSand)) + 10, canvasHeight - ((canvasHeight * pad) - 25));
+        ctx.textAlign = "center";
+        ctx.fillText(percentSand, (canvasWidth - ((canvasWidth * pad) + marginFontSand)), canvasHeight - ((canvasHeight * (pad / 1.5))));
         marginFontSand += gap;
     }
+    ctx.font = `bold ${canvasWidth / 25}px Arial`;
+    ctx.fillStyle  = 'orange';
+    ctx.textAlign = 'center';
+    ctx.save();
+    ctx.fillText('% AREIA', (canvasWidth / 2.1), canvasHeight - (canvasHeight * (pad / 4)));
+    ctx.restore();
 
     var marginFontSilt = 0;
     for (let percentSilt = 0; percentSilt <= 100; percentSilt+=10) {
-        ctx.font = "bold 18px Arial";
+        ctx.font = `bold ${(canvasWidth * 0.025)}px Arial`;
         ctx.fillStyle  = '#FF0000';
         ctx.textAlign = "left";
         ctx.fillText(percentSilt, ((canvasWidth / 2) + 10) + (marginFontSilt / 2), (canvasHeight * pad) + marginFontSilt);
         marginFontSilt += gap;
     }
-    
+    ctx.font = `bold ${canvasWidth / 25}px Arial`;
+    ctx.fillStyle  = '#FF0000';
+    ctx.textAlign = 'center';
+    ctx.save();
+    ctx.translate(canvasWidth, 0);
+    ctx.rotate(Math.PI / 2.9);
+    ctx.fillText('% SILTE', (canvasWidth / 3.3), (canvasHeight / 2.25));
+    ctx.restore();
 
-</script>
+</script> -->
 
 </html>
