@@ -12,9 +12,19 @@
     .canvas-box {
         display: flex;
     }
+    .inputs {
+        padding: 1rem;
+    }
+    .inputs .input {
+        display: flex;
+        flex-direction: column;
+    }
+    .input input {
+        height: 20px;
+        margin-bottom: 1rem;
+    }
     canvas { 
         border: 1px solid #000; 
-        background: url('triangulo.pngo');
         background-position: center;
         background-size: cover;
     }
@@ -22,14 +32,62 @@
 
 <body>
     <div class="canvas-box">
-        <canvas id="canvas" width="1000px" height="1000px"></canvas>
-        <span id="text"></span>
+        <canvas id="canvas" width="800" height="800"></canvas>
+        <div class="inputs">
+            <div class="input">
+                <label>% Argila</label>
+                <input type="number" id="argila">
+            </div>
+            <div class="input">
+                <label>% Silte</label>
+                <input type="number" id="silte">
+            </div>
+            <div class="input">
+                <label>% Areia</label>
+                <input type="number" id="areia">
+            </div>
+            <button type="button">Gerar</button>
+            <p id="soma">Soma: 0%</p>
+            <span id="erro"></span>
+        </div>
     </div>
 </body>
 <script src="./texturalTriangle.js"></script>
 <script>
-    var t = new TexturalTriangle(40, 30, 30);
-    t.draw('canvas');
+
+    var t = new TexturalTriangleCanvas('canvas');
+    t.setLanguage('pt-br');
+    t.draw();
+
+    var argila = document.getElementById('argila');
+    var silte = document.getElementById('silte');
+    var areia = document.getElementById('areia');
+    var btn = document.querySelector('button');
+    var soma = document.getElementById('soma');
+    var erro = document.getElementById('erro');
+
+    argila.addEventListener('input', function() {
+        soma.innerHTML = `Soma: ${parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100)}%`;
+    });
+
+    silte.addEventListener('input', function() {
+        soma.innerHTML = `Soma: ${parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100)}%`;
+    });
+
+    areia.addEventListener('input', function() {
+        soma.innerHTML = `Soma: ${parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100)}%`;
+    });
+
+    btn.addEventListener('click', function() {
+        /* if (parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100) != 100) {
+            erro.innerHTML = "A soma deve ser 100%";
+            t.draw();
+        } else { */
+            erro.innerHTML = "";
+            t.drawWithValues(silte.value / 100, areia.value / 100, argila.value / 100);
+        /* } */
+    });
+
 </script>
 
 
