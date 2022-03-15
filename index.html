@@ -52,11 +52,12 @@
         </div>
     </div>
 </body>
-<script src="./texturalTriangle.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/gh/netosep/textural-triangle-canvas/texturalTriangleCanvas.js"></script> -->
+<script src="./texturalTriangleCanvas.min.js"></script>
 <script>
 
     var t = new TexturalTriangleCanvas('canvas');
-    t.setLanguage('pt-br');
+    //t.setLanguage('sp');
     t.draw();
 
     var argila = document.getElementById('argila');
@@ -79,13 +80,13 @@
     });
 
     btn.addEventListener('click', function() {
-        /* if (parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100) != 100) {
+        if (parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100) != 100) {
             erro.innerHTML = "A soma deve ser 100%";
             t.draw();
-        } else { */
+        } else {
             erro.innerHTML = "";
             t.drawWithValues(silte.value / 100, areia.value / 100, argila.value / 100);
-        /* } */
+        }
     });
 
 </script>
