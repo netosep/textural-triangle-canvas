@@ -26,7 +26,8 @@
 ```html
 <canvas id="myCanvas" width="600" height="600"></canvas>
 ```
-#### Nota: Use as medidas do `width` e `height` iguais! Quanto maior o tamanho melhor a resolução da imagem gerada.
+#### — Nota: Use as medidas do `width` e `height` iguais! Quanto maior o tamanho melhor a resolução da imagem gerada.
+#### — Extra: O tamanho (width), do canvas pode ser redimensionado pelo css.
   
 <li>Em seu código <i>JavaScript</i>, use:</li>
   
@@ -60,7 +61,7 @@ var clayPercent = 25;
 triangle.drawWithValues(siltPercent, sandPercent, clayPercent);
 ```
 
-#### - Nota: A soma dos três valores deve <b>resultar 100</b>, caso contrário retornará um erro no console.
+#### — Nota: A soma dos três valores deve <b>resultar 100</b>, caso contrário retornará um erro no console.
   
 <li>Preview:</li>
 <div align="left">
