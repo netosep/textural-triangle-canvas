@@ -1,345 +1,155 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas</title>
+    <title>Textural Triangle Canvas - DEMO</title>
 </head>
 
 <style>
-    .canvas-box {
-        display: flex;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .canvas-box {
+        margin: 3rem;
+    }
+
+    .canvas-box h1 {
+        text-align: center;
+        font-size: 27pt;
+    }
+
     .inputs {
         padding: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
+
     .inputs .input {
         display: flex;
         flex-direction: column;
     }
-    .input input {
-        height: 20px;
-        margin-bottom: 1rem;
+
+    .input input,
+    .input select {
+        height: 1.5rem;
+        width: 6rem;
+        margin: .5rem;
     }
-    canvas { 
-        border: 1px solid #000; 
+
+    .input label {
+        margin-left: .5rem;
+    }
+
+    .inputs .button {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .inputs .button button {
+        height: 1.5rem;
+        width: 6rem;
+        margin: .5rem;
+    }
+
+    canvas {
+        border: 1px solid #d4d4d4;
         background-position: center;
         background-size: cover;
+        border-radius: .3rem;
+    }
+
+    .results {
+        text-align: center;
+        font-weight: bold;
+        font-size: 17pt;
     }
 </style>
 
 <body>
     <div class="canvas-box">
-        <canvas id="canvas" width="800" height="800"></canvas>
+        <h1>Textural Triangle Canvas</h1>
         <div class="inputs">
             <div class="input">
-                <label>% Argila</label>
-                <input type="number" id="argila">
+                <label id="language">Language</label>
+                <select id="language-value">
+                    <option value="en">English</option>
+                    <option value="pt-br">Brasilian Protuguese</option>
+                    <option value="sp">Spanish</option>
+                </select>
             </div>
             <div class="input">
-                <label>% Silte</label>
-                <input type="number" id="silte">
+                <label id="clay">% Clay</label>
+                <input type="number" id="clay-value">
             </div>
             <div class="input">
-                <label>% Areia</label>
-                <input type="number" id="areia">
+                <label id="silt">% Silt</label>
+                <input type="number" id="silt-value">
             </div>
-            <button type="button">Gerar</button>
-            <p id="soma">Soma: 0%</p>
-            <span id="erro"></span>
+            <div class="input">
+                <label id="sand">% Sand</label>
+                <input type="number" id="sand-value">
+            </div>
+            <div class="button">
+                <button type="button" id="btn-generate">Generate</button>
+            </div>
+        </div>
+        <canvas id="myCanvas" width="700" height="700"></canvas>
+        <div class="results">
+            <p id="sum">Sum: 0%</p>
         </div>
     </div>
 </body>
 <!-- <script src="https://cdn.jsdelivr.net/gh/netosep/textural-triangle-canvas/texturalTriangleCanvas.js"></script> -->
-<script src="./texturalTriangleCanvas.min.js"></script>
+<script src="./texturalTriangleCanvas.js"></script>
 <script>
 
-    var t = new TexturalTriangleCanvas('canvas');
-    //t.setLanguage('sp');
-    t.draw();
+    let myTriangle = new TexturalTriangleCanvas('myCanvas').draw();
+    let language = document.getElementById('language-value');
+    let clay = document.getElementById('clay-value');
+    let silt = document.getElementById('silt-value');
+    let sand = document.getElementById('sand-value');
+    let btn = document.getElementById('btn-generate');
+    let sum = document.getElementById('sum');
 
-    var argila = document.getElementById('argila');
-    var silte = document.getElementById('silte');
-    var areia = document.getElementById('areia');
-    var btn = document.querySelector('button');
-    var soma = document.getElementById('soma');
-    var erro = document.getElementById('erro');
-
-    argila.addEventListener('input', function() {
-        soma.innerHTML = `Soma: ${parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100)}%`;
+    language.addEventListener("change", function () {
+        myTriangle.setLanguage(this.value);
+        myTriangle.refresh();
     });
 
-    silte.addEventListener('input', function() {
-        soma.innerHTML = `Soma: ${parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100)}%`;
+    clay.addEventListener("input", function () {
+        sum.innerHTML = `Sum: ${parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100)}%`;
     });
 
-    areia.addEventListener('input', function() {
-        soma.innerHTML = `Soma: ${parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100)}%`;
+    silt.addEventListener("input", function () {
+        sum.innerHTML = `Sum: ${parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100)}%`;
     });
 
-    btn.addEventListener('click', function() {
-        if (parseInt(((argila.value / 100) + (silte.value / 100) + (areia.value / 100)) * 100) != 100) {
-            erro.innerHTML = "A soma deve ser 100%";
-            t.draw();
-        } else {
-            erro.innerHTML = "";
-            t.drawWithValues(silte.value / 100, areia.value / 100, argila.value / 100);
+    sand.addEventListener("input", function () {
+        sum.innerHTML = `Sum: ${parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100)}%`;
+    });
+
+    btn.addEventListener("click", function () {
+        if (parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100) != 100) {
+            alert("The sum must be 100%");
+            myTriangle.refresh();
+            return;
         }
+        myTriangle.drawWithValues(silt.value, sand.value, clay.value);
     });
 
 </script>
-
-
-<!-- <script type="text/javascript">
-
-    const siltPercent = 0.3;
-    const sandPercent = 0.4 * 10;
-    const clayPercent = 0.3;
-
-    const textColor = 'black';
-    const backgroundColor = 'white';
-    const triangleColor = 'black';
-    const siltColor = 'red';
-    const sandColor = 'orange';
-    const clayColor = 'blue';
-    
-    var canvas = document.getElementById('canvas');
-    var txtSpan = document.getElementById('text');
-    var ctx = canvas.getContext('2d');
-
-    var canvasWidth = canvas.width;
-    var canvasHeight = canvas.height;
-    var pad = 0.1;
-    var gap = ((canvasWidth + canvasHeight) / 2) * 0.08;
-
-    txtSpan.innerHTML = canvasWidth + 'x' + canvasWidth + 'px';
-
-    // background branco
-    ctx.fillStyle  = '#FFF';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(canvasWidth, 0);
-    ctx.lineTo(canvasWidth, canvasHeight);
-    ctx.lineTo(0, canvasHeight);
-    ctx.closePath();
-    ctx.fill();
-
-    // linhas verticaris grade
-    /* for (let x = (canvasWidth * pad); x <= (canvasWidth - (canvasWidth * pad)); x+=gap) {
-        ctx.lineWidth = 1;
-        ctx.setLineDash([4, 2]);
-        ctx.strokeStyle = '#0000ff';
-
-        ctx.beginPath();
-        ctx.moveTo(x, canvasHeight - (canvasHeight * pad));
-        ctx.lineTo(x, (canvasHeight * pad));
-        ctx.stroke(); 
-    } */
-
-    // linhas horizontais grade
-    for (let y = (canvasHeight * pad); y <= (canvasHeight - (canvasHeight * pad)); y+=gap) {
-        ctx.lineWidth = 1;
-        ctx.setLineDash([0, 0]);
-        ctx.strokeStyle = 'blue';
-
-        ctx.beginPath();
-        ctx.moveTo((canvasWidth * pad), y);
-        ctx.lineTo(canvasWidth - (canvasWidth * pad), y);
-        ctx.stroke(); 
-    }
-
-   /*  ctx.lineWidth = 1;
-    ctx.strokeStyle = '#000000';
-    ctx.setLineDash([0, 0]);
-    ctx.beginPath();
-    ctx.moveTo(canvasWidth - (canvasWidth * pad + ((gap * sandPercent))), canvasHeight - (canvasHeight * pad));
-    ctx.lineTo((canvasWidth / 2) - ((gap * sandPercent)), (canvasHeight * pad));
-    ctx.stroke(); */ 
-
-    // sand line
-    var sandLineGap = 0
-    for (let i = (canvasWidth * pad); i < (canvasWidth - (canvasWidth * pad)); i+=gap) {
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = 'orange';
-        ctx.setLineDash([0, 0]);
-
-        ctx.beginPath();
-        ctx.moveTo(canvasWidth - i, canvasHeight - (canvasHeight * pad));
-        ctx.lineTo((canvasWidth / 2) - sandLineGap, (canvasHeight * pad));
-        ctx.stroke(); 
-        sandLineGap += gap;
-    }
-
-    // silt line
-    var siltLineGap = 0
-    for (let i = (canvasWidth * pad); i < (canvasWidth - (canvasWidth * pad)); i+=gap) {
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = '#FF0000';
-        ctx.setLineDash([0, 0]);
-
-        ctx.beginPath();
-        ctx.moveTo(pad + i, canvasHeight - (canvasHeight * pad));
-        ctx.lineTo(((canvasWidth / 2) + siltLineGap), (canvasHeight * pad));
-        ctx.stroke(); 
-        siltLineGap += gap;
-    }
-
-    // linha tipos de solo
-    ctx.lineWidth = (canvasWidth * 0.004);
-    ctx.strokeStyle = 'black';
-    ctx.beginPath();
-    ctx.moveTo((canvasWidth * 0.34), (canvasHeight * 0.42));
-    ctx.lineTo(canvasWidth - (canvasWidth * 0.34), (canvasHeight * 0.42));
-    ctx.lineTo((canvasWidth * 0.58), (canvasHeight * 0.58));
-    ctx.lineTo((canvasWidth * 0.74), (canvasHeight * 0.58));
-    ctx.lineTo((canvasWidth * 0.79), (canvasHeight * 0.68));
-    ctx.lineTo((canvasWidth * 0.63), (canvasHeight * 0.68));
-    ctx.lineTo((canvasWidth * 0.58), (canvasHeight * 0.58));
-    ctx.lineTo((canvasWidth * 0.38), (canvasHeight * 0.58));
-    ctx.lineTo((canvasWidth * 0.32), (canvasHeight * 0.46));
-    ctx.lineTo((canvasWidth * 0.24), (canvasHeight * 0.62));
-    ctx.lineTo((canvasWidth * 0.40), (canvasHeight * 0.62));
-    ctx.lineTo((canvasWidth * 0.38), (canvasHeight * 0.58));
-    ctx.lineTo((canvasWidth * 0.43), (canvasHeight * 0.68));
-    ctx.lineTo((canvasWidth * 0.79), (canvasHeight * 0.68));
-    ctx.lineTo((canvasWidth * 0.61), (canvasHeight * 0.68));
-    ctx.lineTo((canvasWidth * 0.50), (canvasHeight * 0.90));
-    ctx.lineTo((canvasWidth * 0.34), (canvasHeight * 0.90));
-    ctx.lineTo((canvasWidth * 0.16), (canvasHeight * 0.78));
-    ctx.lineTo((canvasWidth * 0.14), (canvasHeight * 0.82));
-    ctx.lineTo((canvasWidth * 0.23), (canvasHeight * 0.90));
-    ctx.lineTo((canvasWidth * 0.50), (canvasHeight * 0.90));
-    ctx.lineTo((canvasWidth * 0.52), (canvasHeight * 0.86));
-    ctx.lineTo((canvasWidth * 0.46), (canvasHeight * 0.86));
-    ctx.lineTo((canvasWidth * 0.40), (canvasHeight * 0.74));
-    ctx.lineTo((canvasWidth * 0.43), (canvasHeight * 0.68));
-    ctx.lineTo((canvasWidth * 0.40), (canvasHeight * 0.74));
-    ctx.lineTo((canvasWidth * 0.18), (canvasHeight * 0.74));
-    ctx.moveTo((canvasWidth * 0.74), (canvasHeight * 0.90));
-    ctx.lineTo((canvasWidth * 0.78), (canvasHeight * 0.82));
-    ctx.lineTo((canvasWidth * 0.86), (canvasHeight * 0.82));
-    ctx.stroke();
-
-    // texto Muito Argilosa
-    ctx.font = `bold ${(canvasWidth * 0.023)}px Arial`;
-    ctx.fillStyle  = textColor;
-    ctx.textAlign = "center";
-    ctx.fillText('MUITO', (canvasWidth / 2), (canvasHeight * 0.31));
-    ctx.fillText('ARGILOSA', (canvasWidth / 2), (canvasHeight * 0.33));
-
-    // texto Argila
-    ctx.font = `bold ${(canvasWidth * 0.023)}px Arial`;
-    ctx.fillStyle  = textColor;
-    ctx.textAlign = "center";
-    ctx.fillText('ARGILA', (canvasWidth / 2), (canvasHeight * 0.51));
-
-    // texto Argilo Siltosa
-    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
-    ctx.fillStyle  = textColor;
-    ctx.textAlign = "center";
-    ctx.fillText('ARGILO', (canvasWidth * 0.66), (canvasHeight * 0.53));
-    ctx.fillText('SILTOSA', (canvasWidth * 0.66), (canvasHeight * 0.55));
-
-    // texto Argilo Arenosa
-    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
-    ctx.fillStyle  = textColor;
-    ctx.textAlign = "center";
-    ctx.fillText('ARGILO', (canvasWidth * 0.32), (canvasHeight * 0.57));
-    ctx.fillText('ARENOSA', (canvasWidth * 0.32), (canvasHeight * 0.59));
-
-    // texto Franco Argilosa
-    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
-    ctx.fillStyle  = textColor;
-    ctx.textAlign = "center";
-    ctx.fillText('FRANCO', (canvasWidth * 0.50), (canvasHeight * 0.63));
-    ctx.fillText('ARGILOSA', (canvasWidth * 0.50), (canvasHeight * 0.65));
-
-    // texto Franco Argilo Siltosa
-    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
-    ctx.fillStyle  = textColor;
-    ctx.textAlign = "center";
-    ctx.fillText('FRANCO', (canvasWidth * 0.68), (canvasHeight * 0.62));
-    ctx.fillText('ARGILO', (canvasWidth * 0.68), (canvasHeight * 0.64));
-    ctx.fillText('SILTOSA', (canvasWidth * 0.68), (canvasHeight * 0.66));
-
-    // texto Franco Argiloso Arenosa
-    ctx.font = `bold ${(canvasWidth * 0.022)}px Arial`;
-    ctx.fillStyle  = textColor;
-    ctx.textAlign = "center";
-    ctx.fillText('FRANCO', (canvasWidth * 0.31), (canvasHeight * 0.67));
-    ctx.fillText('ARGILOSO', (canvasWidth * 0.31), (canvasHeight * 0.69));
-    ctx.fillText('ARENOSA', (canvasWidth * 0.31), (canvasHeight * 0.71));
-
-    // fundo branco mascara
-    ctx.lineWidth = 7;
-    ctx.strokeStyle = textColor;
-    ctx.fillStyle  = '#FFF';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo((canvasWidth / 2), 0);
-    ctx.lineTo((canvasWidth / 2), (canvasHeight * pad));
-    ctx.lineTo((canvasWidth * pad), canvasHeight - (canvasHeight * pad));
-    ctx.lineTo(canvasWidth - (canvasWidth * pad), canvasHeight - (canvasHeight* pad));
-    ctx.lineTo((canvasWidth / 2), (canvasHeight * pad));
-    ctx.lineTo((canvasWidth / 2), 0);
-    ctx.lineTo(canvasWidth, 0);
-    ctx.lineTo(canvasWidth, canvasHeight);
-    ctx.lineTo(0, canvasHeight);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-    
-    var marginFontClay = 0;
-    for (let percentClay = 0; percentClay <= 100; percentClay+=10) {
-        ctx.font = `bold ${(canvasWidth * 0.025)}px Arial`;
-        ctx.fillStyle  = 'blue';
-        ctx.textAlign = "right";
-        ctx.fillText(percentClay, ((canvasWidth * pad) - 10) + (marginFontClay / 2), (canvasHeight - (canvasHeight * pad)) - marginFontClay);
-        marginFontClay += gap;
-    }
-    ctx.font = `bold ${canvasWidth / 25}px Arial`;
-    ctx.fillStyle  = 'blue';
-    ctx.textAlign = 'center';
-    ctx.save();
-    ctx.translate(0, canvasHeight);
-    ctx.rotate(-Math.PI / 2.9);
-    ctx.fillText('% ARGILA', canvasWidth, (canvasHeight / 2));
-    ctx.restore();
-
-    var marginFontSand = 0;
-    for (let percentSand = 0; percentSand <= 100; percentSand+=10) {
-        ctx.font = `bold ${(canvasWidth * 0.025)}px Arial`;
-        ctx.fillStyle  = 'orange';
-        ctx.textAlign = "center";
-        ctx.fillText(percentSand, (canvasWidth - ((canvasWidth * pad) + marginFontSand)), canvasHeight - ((canvasHeight * (pad / 1.5))));
-        marginFontSand += gap;
-    }
-    ctx.font = `bold ${canvasWidth / 25}px Arial`;
-    ctx.fillStyle  = 'orange';
-    ctx.textAlign = 'center';
-    ctx.save();
-    ctx.fillText('% AREIA', (canvasWidth / 2.1), canvasHeight - (canvasHeight * (pad / 4)));
-    ctx.restore();
-
-    var marginFontSilt = 0;
-    for (let percentSilt = 0; percentSilt <= 100; percentSilt+=10) {
-        ctx.font = `bold ${(canvasWidth * 0.025)}px Arial`;
-        ctx.fillStyle  = '#FF0000';
-        ctx.textAlign = "left";
-        ctx.fillText(percentSilt, ((canvasWidth / 2) + 10) + (marginFontSilt / 2), (canvasHeight * pad) + marginFontSilt);
-        marginFontSilt += gap;
-    }
-    ctx.font = `bold ${canvasWidth / 25}px Arial`;
-    ctx.fillStyle  = '#FF0000';
-    ctx.textAlign = 'center';
-    ctx.save();
-    ctx.translate(canvasWidth, 0);
-    ctx.rotate(Math.PI / 2.9);
-    ctx.fillText('% SILTE', (canvasWidth / 3.3), (canvasHeight / 2.25));
-    ctx.restore();
-
-</script> -->
 
 </html>
