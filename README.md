@@ -4,7 +4,7 @@
 
 <div align="center">
   <p>Triângulo Textural para classificação do solo desenvolvido com o <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Canvas_API"><i>HTML Canvas</i></a></p>
-  <img alt="License" src="https://img.shields.io/github/license/netosep/textural-triangle-canvas?color=blue&logo=apache&logoColor=orange">
+  <img alt="License" src="https://img.shields.io/github/license/netosep/textural-triangle-canvas?color=blue&logo=apache&logoColor=blue">
   <img alt="Stars" src="https://img.shields.io/github/stars/netosep/textural-triangle-canvas?logo=github">
 </div>
 
