@@ -11,7 +11,7 @@
 #
 
 ### 💡 Como utilizar
-Faça o <a href="">download</a> do projeto ou use pelo <a href="https://www.jsdelivr.com/">cdn.jsdelivr.net<a> copiando um dos scripts abaixo:
+Faça o <a href="https://github.com/netosep/textural-triangle-canvas/releases/latest">download</a> do projeto ou use pelo <a href="https://www.jsdelivr.com/">cdn.jsdelivr.net<a> copiando um dos scripts abaixo:
 ```html
 <script src="https://cdn.jsdelivr.net/gh/netosep/textural-triangle-canvas/TexturalTriangleCanvas.js"></script>
 // ou
