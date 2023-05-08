@@ -5,78 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Textural Triangle Canvas - DEMO">
+    <meta property="og:image" content="https://i.imgur.com/XqNrB9W.png">
     <title>Textural Triangle Canvas - DEMO</title>
+    <link rel="stylesheet" href="./assets/style/main.css">
 </head>
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .canvas-box {
-        margin: 3rem;
-    }
-
-    .canvas-box h1 {
-        text-align: center;
-        font-size: 27pt;
-    }
-
-    .inputs {
-        padding: 1rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .inputs .input {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .input input,
-    .input select {
-        height: 1.5rem;
-        width: 6rem;
-        margin: .5rem;
-    }
-
-    .input label {
-        margin-left: .5rem;
-    }
-
-    .inputs .button {
-        display: flex;
-        align-items: flex-end;
-    }
-
-    .inputs .button button {
-        height: 1.5rem;
-        width: 6rem;
-        margin: .5rem;
-    }
-
-    canvas {
-        border: 1px solid #d4d4d4;
-        background-position: center;
-        background-size: cover;
-        border-radius: .3rem;
-    }
-
-    .results {
-        text-align: center;
-        font-weight: bold;
-        font-size: 17pt;
-    }
-</style>
 
 <body>
     <div class="canvas-box">
@@ -86,7 +19,7 @@
                 <label id="language">Language</label>
                 <select id="language-value">
                     <option value="en">English</option>
-                    <option value="pt-br">Brasilian Protuguese</option>
+                    <option value="pt-br">Brasilian Portuguese</option>
                     <option value="sp">Spanish</option>
                 </select>
             </div>
@@ -112,44 +45,8 @@
         </div>
     </div>
 </body>
+
 <script src="https://cdn.jsdelivr.net/gh/netosep/textural-triangle-canvas/TexturalTriangleCanvas.min.js"></script>
-<!-- <script src="./texturalTriangleCanvas.js"></script> -->
-<script>
-
-    let myTriangle = new TexturalTriangleCanvas('myCanvas').draw();
-    let language = document.getElementById('language-value');
-    let clay = document.getElementById('clay-value');
-    let silt = document.getElementById('silt-value');
-    let sand = document.getElementById('sand-value');
-    let btn = document.getElementById('btn-generate');
-    let sum = document.getElementById('sum');
-
-    language.addEventListener("change", function () {
-        myTriangle.setLanguage(this.value);
-        myTriangle.refresh();
-    });
-
-    clay.addEventListener("input", function () {
-        sum.innerHTML = `Sum: ${parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100)}%`;
-    });
-
-    silt.addEventListener("input", function () {
-        sum.innerHTML = `Sum: ${parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100)}%`;
-    });
-
-    sand.addEventListener("input", function () {
-        sum.innerHTML = `Sum: ${parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100)}%`;
-    });
-
-    btn.addEventListener("click", function () {
-        if (parseFloat(((clay.value / 100) + (silt.value / 100) + (sand.value / 100)) * 100) != 100) {
-            alert("The sum must be 100%");
-            myTriangle.refresh();
-            return;
-        }
-        myTriangle.drawWithValues(silt.value, sand.value, clay.value);
-    });
-
-</script>
+<script src="./assets/js/demo.js"></script>
 
 </html>
