@@ -22,7 +22,7 @@ Em seu _HTML_, crie sua tag canvas com um ID:
 ```html
 <canvas id="myCanvas" width="700" height="700"></canvas>
 ```
-> **Note**
+> [!note]
 > — Use as medidas de `width` e `height` do canvas iguais! Quanto maior o tamanho melhor a resolução da imagem gerada.
 
 Em seu código _JavaScript_, use:
@@ -57,10 +57,10 @@ triangle.drawWithValues(siltPercent, sandPercent, clayPercent);
 new TexturalTriangleCanvas('myCanvas').drawWithValues(siltPercent, sandPercent, clayPercent);
 ```
 
-> **Note**
+> [!note]
 > A sequencia dos parâmetros da função devem ser respectivamente: silte, areia e argila
 
-> **Warning**
+> [!warning]
 > A soma dos três valores deve **resultar 100**, caso contrário retornará um erro no console.
   
 **🖼 Preview:**
@@ -76,7 +76,7 @@ Idiomas suportados: **Inglês**, **Português Brasileiro** e **Espanhol** (fique
 ```js
 myTriangle.setLanguage('pt-br'); // para usar o idioma português brasileiro (nativo)
 ```
-> **Note**
+> [!note]
 > Caso queira utilizar um idioma diferente dos três citados, você pode passar um objeto json como segundo parâmetro da função. Para mais informações e padrões, <a href="https://github.com/netosep/textural-triangle-canvas/blob/main/TexturalTriangleCanvas.js#L99">veja o código fonte</a>.
 
 Utilize também o método `refresh()` para aplicar alterações de texto na imagem do triângulo:
